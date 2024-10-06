@@ -1,0 +1,22 @@
+# Node modules
+node_modules
+
+# Keep environment variables out of version control
+.env
+
+# Next.js build output
+.next
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Optional: MacOS files
+.DS_Store
+
+# Optional: Visual Studio Code files
+.vscode/
+
+# Optional: Tailwind CSS cache
+.tailwindcss-cache

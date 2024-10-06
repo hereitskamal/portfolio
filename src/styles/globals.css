@@ -1,0 +1,21 @@
+/* src/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* globals.css or any other CSS file */
+
+
+.shadow-inner-dark {
+    box-shadow: inset -44px 0px 43px -23px rgba(0,0,0,0.75);
+}
+
+.shadow-inner-light {
+    box-shadow: inset -44px 0px 43px -23px rgba(0,0,0,0.75);
+}
+.shadow-icon-dark {
+    text-shadow: 0px 0px 100px 0px rgba(0,0,0,0.75);
+}
+.shadow-icon-light {
+    text-shadow: 0 0 100px rgba(255, 255, 255, 0.7);
+}
