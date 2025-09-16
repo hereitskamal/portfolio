@@ -221,7 +221,7 @@ const Index = () => {
 
       {/* Main Content */}
       <main>
-        <section id="home">
+        <section id="home" className="pt-[75px]">
           <Homepage />
         </section>
 

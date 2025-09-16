@@ -5,7 +5,7 @@ import AboutSkills from "../components/Skills";
 
 const Homepage = () => {
   return (
-    <div className="min-h-screen font-sans bg-white text-gray-900 flex mt-12 items-center">
+    <div className="min-h-[calc(100vh-75px)] font-sans bg-white text-gray-900 flex items-center">
       {/* Main Content - Centered Layout */}
       <div className="w-full max-w-6xl mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 items-center">
