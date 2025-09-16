@@ -5,33 +5,34 @@ import AboutSkills from "../components/Skills";
 
 const Homepage = () => {
   return (
-    <div className="min-h-[calc(100vh-50px)] md:min-h-[calc(100vh-75px)] font-sans bg-white text-gray-900 flex items-center">
+    <div className="min-h-screen md:min-h-[calc(100vh-75px)] font-sans bg-white text-gray-900 flex items-center">
       {/* Main Content - Centered Layout */}
       <div className="w-full max-w-6xl mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 items-center">
           {/* Left Side - Main Content */}
           <div className="md:col-span-2 space-y-12">
             <div>
-              <p className="text-gray-400 mb-6 font-light tracking-wide text-sm uppercase">
+              <p className="text-gray-400 mb-6 mt-5 md:mt-0 font-light tracking-wide text-sm uppercase">
                 Hello, Welcome
               </p>
 
               <SplitText
                 text="I'm Kamal"
-                className="text-7xl md:text-9xl font-bold leading-none mb-8 text-black"
+                className="text-6xl md:text-9xl font-bold leading-none mb-4 md:mb-8 text-black"
               />
 
-              <h2 className="text-2xl md:text-3xl font-light text-gray-600 mb-12 leading-relaxed">
+              <h2 className=" md:text-3xl font-light text-gray-600 mb-12 leading-relaxed">
                 Full Stack Developer crafting digital experiences
               </h2>
-
-              <button className="bg-black hover:bg-gray-800 px-10 py-4 rounded-full font-medium transition-all duration-300 text-white text-lg">
-                Get In Touch
-              </button>
+              <div className="flex justify-center md:justify-start">
+                <button className="bg-black  hover:bg-gray-800 px-10 py-4 rounded-full font-medium transition-all duration-300 text-white text-lg">
+                  Get In Touch
+                </button>
+              </div>
             </div>
 
             <div className="pt-8">
-              <p className="text-gray-600 leading-relaxed text-lg max-w-lg">
+              <p className="text-gray-600 leading-relaxed text-lg text-center md:text-left max-w-lg">
                 I create fast & modern interface designs with exceptional UX
                 knowledge for companies across the globe.
               </p>

@@ -76,16 +76,16 @@ const Index = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center mr-3">
+              <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-3">
                 <span className="text-white font-bold text-sm">K</span>
               </div>
-              <span
-                className={`font-bold text-lg transition-all duration-300 ${
+              {/* <span
+                className={`md:font-bold text-lg transition-all duration-300 ${
                   isScrolled ? "text-black" : "text-gray-900"
                 }`}
               >
                 Kamal Sharma
-              </span>
+              </span> */}
             </div>
 
             {/* Navigation */}
