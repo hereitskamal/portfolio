@@ -71,7 +71,7 @@ const Index = () => {
     <div className="relative font-sans">
       {/* Fixed Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`hidden md:block fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
             ? "bg-white/80 backdrop-blur-md"
             : "bg-white/60 backdrop-blur-sm"
@@ -200,8 +200,8 @@ const Index = () => {
       </header>
 
       {/* Mobile Navigation - Bottom Fixed */}
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 md:hidden">
-        <nav className="bg-white/95 backdrop-blur-md rounded-2xl px-6 py-3 shadow-xl border border-white/20">
+      <div className="fixed bottom-2 left-1/2 transform -translate-x-1/2 z-50 md:hidden">
+        <nav className="bg-white/95 backdrop-blur-md rounded-2xl px-4 py-2 shadow-xl border border-white/20">
           <ul className="flex space-x-4">
             {sections.map((section) => (
               <li key={section.id}>
@@ -226,7 +226,7 @@ const Index = () => {
 
       {/* Main Content */}
       <main>
-        <section id="home" className="bg-white pt-[50px] md:pt-[75px]">
+        <section id="home" className="bg-white md:pt-[75px]">
           <Homepage />
         </section>
 

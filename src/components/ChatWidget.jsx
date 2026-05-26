@@ -35,9 +35,26 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState([GREETING]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Prevent body scroll when chat is open on mobile
+  useEffect(() => {
+    if (isMobile && open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isMobile, open]);
 
   useEffect(() => {
     if (open) {
@@ -51,7 +68,6 @@ export default function ChatWidget() {
     if (!userText || loading) return;
 
     setInput("");
-    setHasError(false);
     const next = [...messages, { role: "user", content: userText }];
     setMessages(next);
     setLoading(true);
@@ -66,13 +82,11 @@ export default function ChatWidget() {
       if (!res.ok || !data.reply) throw new Error(data.error || "No reply");
       setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
     } catch {
-      setHasError(true);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content:
-            "Sorry, I hit a snag. You can reach Kamal directly at itskamalofficial@gmail.com 🙂",
+          content: "Sorry, I hit a snag. You can reach Kamal directly at itskamalofficial@gmail.com 🙂",
         },
       ]);
     } finally {
@@ -82,21 +96,34 @@ export default function ChatWidget() {
 
   const showSuggestions = messages.length === 1 && !loading;
 
+  const panelStyle = isMobile
+    ? {
+        position: "fixed",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        borderRadius: 0,
+        bottom: 0,
+        right: 0,
+      }
+    : {
+        position: "fixed",
+        bottom: 88,
+        right: 24,
+        width: 380,
+        maxWidth: "calc(100vw - 32px)",
+        height: 500,
+        borderRadius: 20,
+        boxShadow: "0 24px 80px rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.06)",
+      };
+
   return (
     <>
-      {/* Chat Panel */}
       {open && (
         <div
           style={{
-            position: "fixed",
-            bottom: 88,
-            right: 24,
-            width: 380,
-            maxWidth: "calc(100vw - 32px)",
-            height: 500,
+            ...panelStyle,
             background: "#fff",
-            borderRadius: 20,
-            boxShadow: "0 24px 80px rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.06)",
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
@@ -104,16 +131,17 @@ export default function ChatWidget() {
             animation: "askkamal-up 0.22s cubic-bezier(0.23, 1, 0.32, 1)",
           }}
         >
-          {/* Header — minimal light */}
+          {/* Header */}
           <div
             style={{
               background: "#fff",
               borderBottom: "1px solid #f0f0f0",
-              padding: "12px 16px",
+              padding: isMobile ? "14px 16px" : "12px 16px",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               flexShrink: 0,
+              paddingTop: isMobile ? "max(14px, env(safe-area-inset-top))" : "12px",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -158,18 +186,15 @@ export default function ChatWidget() {
                 background: "none",
                 border: "none",
                 cursor: "pointer",
-                width: 28,
-                height: 28,
+                width: 32,
+                height: 32,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: 18,
                 lineHeight: 1,
-                transition: "color 0.15s",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#111")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#9ca3af")}
             >
               ✕
             </button>
@@ -184,6 +209,7 @@ export default function ChatWidget() {
               display: "flex",
               flexDirection: "column",
               gap: 8,
+              WebkitOverflowScrolling: "touch",
             }}
           >
             {messages.map((msg, i) => (
@@ -204,7 +230,7 @@ export default function ChatWidget() {
                         : "16px 16px 16px 3px",
                     background: msg.role === "user" ? "#000" : "#f4f4f5",
                     color: msg.role === "user" ? "#fff" : "#111827",
-                    fontSize: 13.5,
+                    fontSize: isMobile ? 15 : 13.5,
                     lineHeight: 1.55,
                     wordBreak: "break-word",
                   }}
@@ -214,7 +240,6 @@ export default function ChatWidget() {
               </div>
             ))}
 
-            {/* Typing indicator */}
             {loading && (
               <div style={{ display: "flex" }}>
                 <div
@@ -229,7 +254,6 @@ export default function ChatWidget() {
               </div>
             )}
 
-            {/* Suggestion chips */}
             {showSuggestions && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 6 }}>
                 {SUGGESTIONS.map((s, i) => (
@@ -240,8 +264,8 @@ export default function ChatWidget() {
                       background: "#f4f4f5",
                       border: "1px solid #e5e7eb",
                       borderRadius: 20,
-                      padding: "5px 12px",
-                      fontSize: 12,
+                      padding: "6px 13px",
+                      fontSize: isMobile ? 13 : 12,
                       color: "#374151",
                       cursor: "pointer",
                     }}
@@ -258,9 +282,11 @@ export default function ChatWidget() {
           {/* Input */}
           <div
             style={{
-              padding: "10px 12px 12px",
+              padding: "10px 12px",
+              paddingBottom: isMobile ? "max(12px, env(safe-area-inset-bottom))" : "12px",
               borderTop: "1px solid #f3f4f6",
               flexShrink: 0,
+              background: "#fff",
             }}
           >
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
@@ -272,10 +298,10 @@ export default function ChatWidget() {
                 placeholder="Ask anything about Kamal…"
                 style={{
                   flex: 1,
-                  padding: "9px 14px",
+                  padding: isMobile ? "11px 16px" : "9px 14px",
                   borderRadius: 24,
                   border: "1px solid #e5e7eb",
-                  fontSize: 13,
+                  fontSize: isMobile ? 16 : 13,
                   outline: "none",
                   background: "#f9fafb",
                   color: "#111",
@@ -285,8 +311,8 @@ export default function ChatWidget() {
                 onClick={() => send()}
                 disabled={!input.trim() || loading}
                 style={{
-                  width: 36,
-                  height: 36,
+                  width: 40,
+                  height: 40,
                   borderRadius: "50%",
                   background: input.trim() && !loading ? "#000" : "#e5e7eb",
                   border: "none",
@@ -299,8 +325,8 @@ export default function ChatWidget() {
                 }}
               >
                 <svg
-                  width="15"
-                  height="15"
+                  width="16"
+                  height="16"
                   fill="none"
                   stroke={input.trim() && !loading ? "#fff" : "#9ca3af"}
                   viewBox="0 0 24 24"
@@ -327,10 +353,11 @@ export default function ChatWidget() {
         title="Ask Kamal AI"
         style={{
           position: "fixed",
-          bottom: 24,
-          right: 24,
-          width: 56,
-          height: 56,
+          ...(isMobile
+            ? { top: 12, right: 14 }
+            : { bottom: 24, right: 24 }),
+          width: isMobile ? 42 : 56,
+          height: isMobile ? 42 : 56,
           borderRadius: "50%",
           background: "#000",
           border: "none",
@@ -367,8 +394,7 @@ export default function ChatWidget() {
         )}
       </button>
 
-      {/* Tooltip label on first load */}
-      {!open && (
+      {!open && !isMobile && (
         <div
           style={{
             position: "fixed",
