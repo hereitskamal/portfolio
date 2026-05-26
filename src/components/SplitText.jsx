@@ -44,6 +44,8 @@ const SplitText = ({ text, className = "" }) => {
     }
   }
 
+  const words = text.split(' ')
+
   return (
     <motion.div
       ref={ref}
@@ -51,20 +53,28 @@ const SplitText = ({ text, className = "" }) => {
       variants={containerVariants}
       initial="hidden"
       animate={controls}
-      style={{ display: 'inline-block' }}
+      style={{ display: 'block' }}
     >
-      {characters.map((char, index) => (
-        <motion.span
-          key={index}
-          variants={childVariants}
-          style={{ 
-            display: 'inline-block',
-            transformOrigin: 'bottom center',
-            transformStyle: 'preserve-3d'
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
+      {words.map((word, wi) => (
+        <span key={wi} style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+          {word.split('').map((char, ci) => {
+            const globalIndex = text.indexOf(word) + ci
+            return (
+              <motion.span
+                key={ci}
+                variants={childVariants}
+                style={{
+                  display: 'inline-block',
+                  transformOrigin: 'bottom center',
+                  transformStyle: 'preserve-3d'
+                }}
+              >
+                {char}
+              </motion.span>
+            )
+          })}
+          {wi < words.length - 1 && '\u00A0'}
+        </span>
       ))}
     </motion.div>
   )
