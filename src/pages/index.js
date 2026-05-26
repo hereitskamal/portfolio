@@ -5,8 +5,11 @@ import ExperienceSection from "../components/ExperienceSection";
 import ProjectsSection from "../components/ProjectsSection";
 import ConnectSection from "../components/ConnectSection";
 import PersonalProjectsSection from "../components/PersonalProjectsSection";
+import ChatWidget from "../components/ChatWidget";
+import LoadingScreen from "../components/LoadingScreen";
 
 const Index = () => {
+  const [loaded, setLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
   const [ctaClicked, setCtaClicked] = useState(false);
@@ -61,6 +64,8 @@ const Index = () => {
       setCtaClicked(false);
     }, 3000);
   };
+
+  if (!loaded) return <LoadingScreen onComplete={() => setLoaded(true)} />;
 
   return (
     <div className="relative font-sans">
@@ -242,6 +247,8 @@ const Index = () => {
           <ConnectSection />
         </section>
       </main>
+
+      <ChatWidget />
 
       {/* Custom CSS for animation delays */}
       <style jsx>{`

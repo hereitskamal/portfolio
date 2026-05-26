@@ -18,12 +18,12 @@ const educationData = [
         cgpa: "CGPA: 6.0",
     },
     {
-        year: "2016",
-        title: "College",
-        institute: "PQR University",
+        year: "2019",
+        title: "Bachelor of Engineering",
+        institute: "RGPV University, Ujjain",
         field: "Computer Science",
         cgpa: "CGPA: 6.63",
-        skills: ["Web Development", "UI/UX Design", "Database Management", "Javascript", "Angular"],
+        skills: ["Web Development", "UI/UX Design", "Database Management", "JavaScript", "React"],
     },
 ];
 

@@ -4,15 +4,26 @@ import SplitText from "../components/SplitText";
 const ExperienceSection = () => {
   const experiences = [
     {
+      company: "Galaxy Weblinks",
+      position: "Senior Frontend Engineer",
+      location: "Indore",
+      duration: "Nov 2025 – Present",
+      current: true,
+      achievements: [
+        "Migrating scalable Law Firm Management platform in Next.js for US client Thomson Reuters",
+        "Built saleable Boat booking software for US client using Next.js, Tailwind CSS, and ShadCN"
+      ]
+    },
+    {
       company: "Squadra Media",
       position: "Senior Frontend Developer",
       location: "Bengaluru",
-      duration: "Oct 2024 – Present",
-      current: true,
+      duration: "Oct 2024 – Oct 2025",
+      current: false,
       achievements: [
-        "Architected a scalable LMS platform using React, TypeScript, GraphQL, Node.js and Tailwind CSS, tailored for learning flows",
-        "Built a dynamic & responsive marketing site with Next.js and Framer Motion; achieved excellent PSI and Lighthouse scores",
-        "Led and mentored a team of 3 frontend engineers, streamlining development through reviews and CI/CD integration",
+        "Architected scalable LMS platform using React, TypeScript, and GraphQL serving 5,000+ users with 99.9% uptime",
+        "Built responsive marketing site with Next.js and Framer Motion, achieving 95+ Lighthouse scores and 40% faster load times",
+        "Led team of 3 frontend engineers, implementing CI/CD pipelines that reduced deployment time by 60%",
         "Enhanced performance by implementing lazy loading and code-splitting across routes and components"
       ]
     },
@@ -20,25 +31,25 @@ const ExperienceSection = () => {
       company: "Insignia Consultancy Solutions",
       position: "MERN Stack Developer",
       location: "Remote",
-      duration: "Jan 2024 – Oct 2024",
+      duration: "Jan 2023 – Oct 2024",
       current: false,
       achievements: [
-        "Designed and implemented advanced e-commerce features to support product filtering, and user dashboards",
-        "Created 50+ reusable components with Storybook, improving consistency across modules and accelerating team velocity",
-        "Built a cross-platform universal dashboard showing real-time analytics and activity logs for internal stakeholders",
-        "Refactored legacy frontend and backend code for better maintainability, security, and developer experience"
+        "Designed advanced e-commerce features supporting product filtering for 500+ daily transactions",
+        "Created 50+ reusable Storybook components, reducing development time by 30% across 8 projects",
+        "Built universal dashboard with real-time analytics serving 10+ stakeholders, improving efficiency by 45%",
+        "Refactored legacy codebase with TypeScript, improving application performance by 50% and reducing bugs"
       ]
     },
     {
       company: "VJ Smart Living",
       position: "Web Developer",
       location: "Bengaluru",
-      duration: "Feb 2021 – Jan 2024",
+      duration: "Feb 2021 – Jan 2023",
       current: false,
       achievements: [
-        "Developed a modern dashboard (Front-end + Back-end) for controlling IoT devices, optimized for mobile and tablet views",
-        "Built a CRM, ERP system for sales and support teams with role-based access and ticket management workflows",
-        "Automated device and alert workflows using WebSocket and backend triggers to reduce repetitive manual work"
+        "Developed IoT device dashboard controlling 80+ devices with mobile optimization and 98% user satisfaction",
+        "Built CRM/ERP system with role-based access serving 200+ users, reducing manual workflows by 70%",
+        "Automated alert workflows using WebSocket and Node.js, decreasing response times by 80%"
       ]
     }
   ];
@@ -58,8 +69,8 @@ const ExperienceSection = () => {
             />
           </div>
           <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-light">
-            5+ years building scalable web applications and leading development teams 
-            across EdTech, IoT, and e-commerce domains.
+            5+ years building scalable web applications and leading development teams
+            across LegalTech, EdTech, IoT, and e-commerce domains.
           </p>
         </div>
 
@@ -116,8 +127,8 @@ const ExperienceSection = () => {
               <p className="text-gray-500 text-sm uppercase tracking-wide">Projects Delivered</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-black mb-2">3</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">Team Members Led</p>
+              <p className="text-3xl font-bold text-black mb-2">4</p>
+              <p className="text-gray-500 text-sm uppercase tracking-wide">Companies</p>
             </div>
           </div>
         </div>

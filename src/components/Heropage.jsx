@@ -22,12 +22,22 @@ const Homepage = () => {
               />
 
               <h2 className=" md:text-3xl font-light text-gray-600 mb-12 leading-relaxed">
-                Full Stack Developer crafting digital experiences
+                Senior Full Stack Developer · MERN · React · Next.js
               </h2>
-              <div className="flex justify-center md:justify-start">
-                <button className="bg-black  hover:bg-gray-800 px-10 py-4 rounded-full font-medium transition-all duration-300 text-white text-lg">
+              <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                <button className="bg-black hover:bg-gray-800 px-10 py-4 rounded-full font-medium transition-all duration-300 text-white text-lg">
                   Get In Touch
                 </button>
+                <a
+                  href="/Kamal_Sharma_Resume.pdf"
+                  download
+                  className="border border-black text-black hover:bg-gray-50 px-10 py-4 rounded-full font-medium transition-all duration-300 text-lg flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Download CV
+                </a>
               </div>
             </div>
 
