@@ -73,32 +73,30 @@ const Homepage = () => {
             />
           </div>
 
-          {/* Full-width image — no border, no radius */}
-          <div className="relative w-full h-72">
+          {/* Full image — natural aspect ratio, small side margins */}
+          <div className="px-10 py-3">
             <Image
               src="/kamal.png"
               alt="Kamal"
-              fill
-              className="object-cover object-top"
+              width={800}
+              height={1000}
+              className="w-full h-auto rounded-xl"
               priority
             />
           </div>
 
           {/* Text + buttons below image */}
           <div className="px-5 pt-5 pb-24 space-y-5">
-            <h2 className="text-sm font-light text-gray-500 leading-relaxed">
-              Senior Full Stack Developer · MERN · React · Next.js
-            </h2>
 
-            {/* Buttons: flex row */}
-            <div className="flex gap-3">
-              <button className="flex-1 bg-black hover:bg-gray-800 px-4 py-2.5 rounded-full font-medium transition-all duration-300 text-white text-sm text-center">
+            {/* Buttons: column, right-aligned */}
+            <div className="flex flex-col gap-2 items-end">
+              <button className="bg-black hover:bg-gray-800 px-6 py-2.5 rounded-full font-medium transition-all duration-300 text-white text-sm w-fit">
                 Get In Touch
               </button>
               <a
                 href="/Kamal_Sharma_Resume.pdf"
                 download
-                className="flex-1 border border-black text-black hover:bg-gray-50 px-4 py-2.5 rounded-full font-medium transition-all duration-300 text-sm flex items-center justify-center gap-1.5"
+                className="border border-black text-black hover:bg-gray-50 px-6 py-2.5 rounded-full font-medium transition-all duration-300 text-sm flex items-center gap-1.5 w-fit"
               >
                 <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -107,13 +105,17 @@ const Homepage = () => {
               </a>
             </div>
 
-            <p className="text-gray-500 leading-relaxed text-sm">
+            <h2 className="text-sm font-light text-gray-500 leading-relaxed text-center">
+              Senior Full Stack Developer · MERN · React · Next.js
+            </h2>
+
+            <p className="text-gray-500 leading-relaxed text-sm text-center">
               I create fast & modern interface designs with exceptional UX
               knowledge for companies across the globe.
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 pt-3 border-t border-gray-100">
+            <div className="grid grid-cols-3 gap-4 pt-3 border-t border-gray-100 text-center">
               {[["5+", "Years"], ["100%", "Success"], ["50+", "Projects"]].map(([v, l]) => (
                 <div key={l}>
                   <div className="text-2xl font-bold text-black">{v}</div>
