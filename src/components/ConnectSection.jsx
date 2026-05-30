@@ -1,6 +1,8 @@
 import React from "react";
 import SplitText from "../components/SplitText";
 import { GitHubCalendar } from "react-github-calendar";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const ConnectSection = () => {
   const socialCards = [
@@ -159,14 +161,22 @@ const ConnectSection = () => {
           <div className="overflow-x-auto py-2" style={{ color: "#374151" }}>
             <GitHubCalendar
               username="hereitskamal"
+              year="last"
               colorScheme="light"
               blockSize={13}
               blockMargin={4}
               fontSize={12}
               theme={{
-                light: ["#f0f0f0", "#d1d5db", "#6b7280", "#374151", "#111827"],
+                light: ["#ffffff", "#d1d5db", "#6b7280", "#374151", "#111827"],
               }}
+              renderBlock={(block, activity) =>
+                React.cloneElement(block, {
+                  "data-tooltip-id": "gh-cal-tip",
+                  "data-tooltip-content": `${activity.count} contribution${activity.count !== 1 ? "s" : ""} on ${activity.date}`,
+                })
+              }
             />
+            <Tooltip id="gh-cal-tip" style={{ fontSize: 12, borderRadius: 8 }} />
           </div>
         </div>
 
