@@ -1,6 +1,6 @@
 import React from "react";
 import SplitText from "../components/SplitText";
-import GitHubCalendar from "react-github-calendar";
+import { GitHubCalendar } from "react-github-calendar";
 
 const ConnectSection = () => {
   const socialCards = [
