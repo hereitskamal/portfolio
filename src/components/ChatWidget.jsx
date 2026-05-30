@@ -355,73 +355,85 @@ export default function ChatWidget() {
               background: "#fff",
             }}
           >
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            {/* Unified compose bar — single pill with input + buttons inside */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                border: isListening ? "1.5px solid #fca5a5" : "1.5px solid #d1d5db",
+                borderRadius: 28,
+                background: isListening ? "#fff5f5" : "#f9fafb",
+                padding: "4px 6px 4px 14px",
+                gap: 6,
+                transition: "border-color 0.2s, background 0.2s",
+              }}
+            >
               <input
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()}
-                placeholder={isListening ? "Listening… speak your question" : "Ask anything about Kamal…"}
+                placeholder={isListening ? "Listening… speak now" : "Ask anything about Kamal…"}
                 disabled={isListening}
                 style={{
                   flex: 1,
-                  padding: isMobile ? "11px 16px" : "9px 14px",
-                  borderRadius: 24,
-                  border: isListening ? "1px solid #fca5a5" : "1px solid #e5e7eb",
-                  fontSize: isMobile ? 16 : 13,
+                  minWidth: 0,
+                  border: "none",
                   outline: "none",
-                  background: isListening ? "#fff5f5" : "#f9fafb",
+                  background: "transparent",
+                  fontSize: isMobile ? 16 : 13,
                   color: "#111",
-                  transition: "border-color 0.2s, background 0.2s",
+                  padding: isMobile ? "7px 0" : "5px 0",
                 }}
               />
 
-              {/* Mic button — only shown when browser supports Speech API */}
+              {/* Mic button */}
               {hasSpeechSupport && (
                 <button
                   onClick={toggleVoice}
                   disabled={loading}
-                  title={isListening ? "Stop listening" : "Speak your question"}
+                  title={isListening ? "Stop listening" : "Voice input"}
                   style={{
-                    width: 40,
-                    height: 40,
+                    width: 34,
+                    height: 34,
                     borderRadius: "50%",
-                    background: isListening ? "#ef4444" : "#f3f4f6",
-                    border: "none",
+                    background: isListening ? "#ef4444" : "#fff",
+                    border: isListening ? "none" : "1.5px solid #d1d5db",
                     cursor: loading ? "default" : "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,
-                    transition: "background 0.15s",
-                    animation: isListening ? "askkamal-pulse 1s ease infinite" : "none",
+                    transition: "all 0.15s",
                     color: isListening ? "#fff" : "#6b7280",
+                    animation: isListening ? "askkamal-pulse 1s ease infinite" : "none",
                   }}
                 >
                   {isListening ? <StopIcon /> : <MicIcon />}
                 </button>
               )}
 
+              {/* Send button */}
               <button
                 onClick={() => send()}
                 disabled={!input.trim() || loading || isListening}
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: 34,
+                  height: 34,
                   borderRadius: "50%",
-                  background: input.trim() && !loading && !isListening ? "#000" : "#e5e7eb",
-                  border: "none",
+                  background: input.trim() && !loading && !isListening ? "#111" : "#fff",
+                  border: input.trim() && !loading && !isListening ? "none" : "1.5px solid #d1d5db",
                   cursor: input.trim() && !loading && !isListening ? "pointer" : "default",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   flexShrink: 0,
-                  transition: "background 0.15s",
+                  transition: "all 0.15s",
                 }}
               >
                 <svg
-                  width="16"
-                  height="16"
+                  width="15"
+                  height="15"
                   fill="none"
                   stroke={input.trim() && !loading && !isListening ? "#fff" : "#9ca3af"}
                   viewBox="0 0 24 24"
@@ -429,7 +441,7 @@ export default function ChatWidget() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={2.2}
                     d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                   />
                 </svg>
