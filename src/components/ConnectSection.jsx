@@ -156,7 +156,7 @@ const ConnectSection = () => {
           <p className="text-gray-400 text-xs uppercase tracking-widest font-light mb-6">
             GitHub Activity · Last 12 Months
           </p>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto py-2" style={{ color: "#374151" }}>
             <GitHubCalendar
               username="hereitskamal"
               colorScheme="light"
