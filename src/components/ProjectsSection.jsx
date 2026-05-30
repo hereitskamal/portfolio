@@ -5,25 +5,25 @@ const ProjectsSection = () => {
   const mainProjects = [
     {
       name: "E-Learning Platform (LYNQ)",
-      description: "Scalable LMS platform with user subscriptions and payment integration",
+      description: "Architected a scalable LMS platform with user subscriptions, payment integration, and 99.9% uptime. Built with server-side rendering for performance and SEO.",
       technologies: ["React", "TypeScript", "GraphQL", "Node.js", "MongoDB", "AWS"],
-      metrics: "10k+ users, subscriptions, payments",
+      metrics: "5,000+ users · subscriptions · payments",
       category: "SaaS Platform",
       link: "#"
     },
     {
       name: "Universal Dashboard",
-      description: "Real-time analytics dashboard with cross-platform compatibility",
+      description: "Real-time analytics dashboard serving 10+ stakeholders with live data visualisation across 1M+ datapoints. Improved operational efficiency by 45%.",
       technologies: ["React", "D3.js", "Express", "Node.js", "MongoDB"],
-      metrics: "Real-time insights, 1M+ datapoints",
+      metrics: "1M+ datapoints · 10+ stakeholders · 45% efficiency gain",
       category: "Analytics",
       link: "#"
     },
     {
       name: "Smart Home Platform",
-      description: "IoT device control system with mobile-first responsive design",
-      technologies: ["React", "Node.js", "Socket.io", "MongoDB", "WebSocket"],
-      metrics: "IoT control, mobile-friendly, offline support",
+      description: "IoT device management system controlling 80+ devices with mobile-first design, offline support, and WebSocket-powered real-time alerts. Achieved 98% user satisfaction.",
+      technologies: ["React", "Node.js", "Socket.io", "WebSocket", "MongoDB"],
+      metrics: "80+ devices · offline support · 98% satisfaction",
       category: "IoT Platform",
       link: "#"
     }
@@ -100,19 +100,19 @@ const ProjectsSection = () => {
         <div className="pt-16 border-t border-gray-100">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <p className="text-2xl font-bold text-black mb-1">6</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">Featured Projects</p>
+              <p className="text-2xl font-bold text-black mb-1">50+</p>
+              <p className="text-gray-500 text-sm uppercase tracking-wide">Projects Delivered</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-black mb-1">15+</p>
+              <p className="text-2xl font-bold text-black mb-1">20+</p>
               <p className="text-gray-500 text-sm uppercase tracking-wide">Technologies</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-black mb-1">10k+</p>
+              <p className="text-2xl font-bold text-black mb-1">5k+</p>
               <p className="text-gray-500 text-sm uppercase tracking-wide">Users Served</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-black mb-1">3</p>
+              <p className="text-2xl font-bold text-black mb-1">5+</p>
               <p className="text-gray-500 text-sm uppercase tracking-wide">AI Projects</p>
             </div>
           </div>
