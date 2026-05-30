@@ -58,7 +58,7 @@ const ExperienceSection = () => {
     <div className="min-h-screen bg-white py-24 font-sans">
       <div className="w-full max-w-6xl mx-auto px-8">
         {/* Section Header */}
-        <div className="mb-20">
+        <div className="mb-40">
           <div className="mb-8">
             <p className="text-gray-400 text-sm uppercase tracking-wider mb-4 font-light">
               Professional Journey
@@ -77,11 +77,11 @@ const ExperienceSection = () => {
         {/* Experience List */}
         <div className="space-y-16">
           {experiences.map((exp, index) => (
-            <div key={index} className="border-b border-gray-100 pb-16 last:border-b-0">
+            <div key={index} className="border-b border-gray-100 pb-28 last:border-b-0">
               {/* Position & Company */}
-              <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-6">
+              <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-8">
                 <div className="mb-2 md:mb-0">
-                  <h3 className="text-2xl font-bold text-black mb-1">
+                  <h3 className="text-4xl font-semibold text-black mb-1">
                     {exp.position}
                   </h3>
                   <p className="text-xl text-gray-700 font-medium">
@@ -104,9 +104,9 @@ const ExperienceSection = () => {
               </div>
 
               {/* Achievements */}
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {exp.achievements.map((achievement, idx) => (
-                  <p key={idx} className="text-gray-700 leading-relaxed">
+                  <p key={idx} className="text-gray-700 ">
                     {achievement}
                   </p>
                 ))}
@@ -119,15 +119,15 @@ const ExperienceSection = () => {
         <div className="mt-20 pt-16 border-t border-gray-100">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <p className="text-3xl font-bold text-black mb-2">5+</p>
+              <p className="text-8xl font-bold text-black mb-2">5+</p>
               <p className="text-gray-500 text-sm uppercase tracking-wide">Years Experience</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-black mb-2">50+</p>
+              <p className="text-8xl font-bold text-black mb-2">20+</p>
               <p className="text-gray-500 text-sm uppercase tracking-wide">Projects Delivered</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-black mb-2">4</p>
+              <p className="text-8xl font-bold text-black mb-2">4</p>
               <p className="text-gray-500 text-sm uppercase tracking-wide">Companies</p>
             </div>
           </div>

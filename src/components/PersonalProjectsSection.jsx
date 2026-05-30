@@ -305,7 +305,7 @@ const PersonalProjectsSection = () => {
     <div className="min-h-screen bg-white py-24 font-sans">
       <div className="w-full max-w-5xl mx-auto px-8">
         {/* Section Header */}
-        <div className="mb-20">
+        <div className="mb-36">
           <div className="mb-8">
             <p className="text-gray-400 text-sm uppercase tracking-wider mb-4 font-light">
               Personal Work
@@ -322,7 +322,7 @@ const PersonalProjectsSection = () => {
         </div>
 
         {/* Projects List */}
-        <div className="space-y-20">
+        <div className="space-y-36">
           {personalProjects.map((project, index) => (
             <div
               key={index}
@@ -332,7 +332,7 @@ const PersonalProjectsSection = () => {
                 {/* Project Content */}
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-2xl font-bold text-black mb-2">
+                    <h3 className="text-4xl font-bold text-black mb-2">
                       {project.name}
                     </h3>
                     <p className="text-lg text-gray-700 font-medium">

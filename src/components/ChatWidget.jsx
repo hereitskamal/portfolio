@@ -341,7 +341,7 @@ export default function ChatWidget() {
               </button>
             </div>
             <p style={{ fontSize: 10, color: "#9ca3af", textAlign: "center", marginTop: 6 }}>
-              Powered by Gemini · Kamal's AI rep
+              Powered by Xaico · Kamal's AI rep
             </p>
           </div>
         </div>

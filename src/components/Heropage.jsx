@@ -19,7 +19,7 @@ const Homepage = () => {
                 text="I'm Kamal"
                 className="text-9xl font-bold leading-none mb-8 text-black"
               />
-              <h2 className="text-3xl font-light text-gray-600 mb-12 leading-relaxed">
+              <h2 className="text-2xl font-light text-gray-600 mb-12 leading-relaxed">
                 Senior Full Stack Developer · MERN · React · Next.js
               </h2>
               <div className="flex gap-4">
@@ -50,7 +50,7 @@ const Homepage = () => {
               <Image src="/kamal.png" alt="Kamal" fill className="object-cover" priority />
             </div>
             <div className="grid grid-cols-3 gap-8 text-center w-full">
-              {[["5+", "Years"], ["100%", "Success"], ["50+", "Projects"]].map(([v, l]) => (
+              {[["5+", "Years"], ["100%", "Success"], ["20+", "Projects"]].map(([v, l]) => (
                 <div key={l}>
                   <div className="text-3xl font-bold text-black mb-2">{v}</div>
                   <div className="text-gray-500 text-xs font-medium uppercase tracking-wide">{l}</div>
@@ -116,7 +116,7 @@ const Homepage = () => {
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 pt-3 border-t border-gray-100 text-center">
-              {[["5+", "Years"], ["100%", "Success"], ["50+", "Projects"]].map(([v, l]) => (
+              {[["5+", "Years"], ["100%", "Success"], ["20+", "Projects"]].map(([v, l]) => (
                 <div key={l}>
                   <div className="text-2xl font-bold text-black">{v}</div>
                   <div className="text-gray-400 text-xs font-medium uppercase tracking-wide mt-1">{l}</div>
