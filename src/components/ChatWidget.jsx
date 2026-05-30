@@ -30,14 +30,34 @@ const TypingDots = () => (
   </div>
 );
 
+const MicIcon = () => (
+  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+      d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+      d="M19 10v2a7 7 0 0 1-14 0v-2" />
+    <line strokeLinecap="round" strokeWidth={2} x1="12" y1="19" x2="12" y2="23" />
+    <line strokeLinecap="round" strokeWidth={2} x1="8" y1="23" x2="16" y2="23" />
+  </svg>
+);
+
+const StopIcon = () => (
+  <svg width="14" height="14" fill="white" viewBox="0 0 24 24">
+    <rect x="6" y="6" width="12" height="12" rx="2" />
+  </svg>
+);
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([GREETING]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [hasSpeechSupport, setHasSpeechSupport] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
@@ -46,7 +66,13 @@ export default function ChatWidget() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Prevent body scroll when chat is open on mobile
+  useEffect(() => {
+    setHasSpeechSupport(
+      typeof window !== "undefined" &&
+        !!(window.SpeechRecognition || window.webkitSpeechRecognition)
+    );
+  }, []);
+
   useEffect(() => {
     if (isMobile && open) {
       document.body.style.overflow = "hidden";
@@ -62,6 +88,13 @@ export default function ChatWidget() {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [messages, open]);
+
+  // Stop recognition when chat closes
+  useEffect(() => {
+    if (!open && isListening) {
+      recognitionRef.current?.stop();
+    }
+  }, [open, isListening]);
 
   const send = async (text) => {
     const userText = (text ?? input).trim();
@@ -94,18 +127,36 @@ export default function ChatWidget() {
     }
   };
 
+  const toggleVoice = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      return;
+    }
+
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) return;
+
+    const recognition = new SR();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => setIsListening(true);
+    recognition.onend = () => setIsListening(false);
+    recognition.onerror = () => setIsListening(false);
+    recognition.onresult = (e) => {
+      const transcript = e.results[0]?.[0]?.transcript?.trim();
+      if (transcript) send(transcript);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
+  };
+
   const showSuggestions = messages.length === 1 && !loading;
 
   const panelStyle = isMobile
-    ? {
-        position: "fixed",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        borderRadius: 0,
-        bottom: 0,
-        right: 0,
-      }
+    ? { position: "fixed", inset: 0, width: "100%", height: "100%", borderRadius: 0, bottom: 0, right: 0 }
     : {
         position: "fixed",
         bottom: 88,
@@ -166,16 +217,33 @@ export default function ChatWidget() {
                   Ask Kamal
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 2 }}>
-                  <div
-                    style={{
-                      width: 6,
-                      height: 6,
-                      background: "#22c55e",
-                      borderRadius: "50%",
-                      boxShadow: "0 0 0 2px rgba(34,197,94,0.2)",
-                    }}
-                  />
-                  <span style={{ color: "#9ca3af", fontSize: 11 }}>AI Assistant · Online</span>
+                  {isListening ? (
+                    <>
+                      <div
+                        style={{
+                          width: 6,
+                          height: 6,
+                          background: "#ef4444",
+                          borderRadius: "50%",
+                          animation: "askkamal-pulse 1s ease infinite",
+                        }}
+                      />
+                      <span style={{ color: "#ef4444", fontSize: 11, fontWeight: 500 }}>Listening…</span>
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        style={{
+                          width: 6,
+                          height: 6,
+                          background: "#22c55e",
+                          borderRadius: "50%",
+                          boxShadow: "0 0 0 2px rgba(34,197,94,0.2)",
+                        }}
+                      />
+                      <span style={{ color: "#9ca3af", fontSize: 11 }}>AI Assistant · Online</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -225,9 +293,7 @@ export default function ChatWidget() {
                     maxWidth: "82%",
                     padding: "9px 13px",
                     borderRadius:
-                      msg.role === "user"
-                        ? "16px 16px 3px 16px"
-                        : "16px 16px 16px 3px",
+                      msg.role === "user" ? "16px 16px 3px 16px" : "16px 16px 16px 3px",
                     background: msg.role === "user" ? "#000" : "#f4f4f5",
                     color: msg.role === "user" ? "#fff" : "#111827",
                     fontSize: isMobile ? 15 : 13.5,
@@ -295,28 +361,57 @@ export default function ChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()}
-                placeholder="Ask anything about Kamal…"
+                placeholder={isListening ? "Listening… speak your question" : "Ask anything about Kamal…"}
+                disabled={isListening}
                 style={{
                   flex: 1,
                   padding: isMobile ? "11px 16px" : "9px 14px",
                   borderRadius: 24,
-                  border: "1px solid #e5e7eb",
+                  border: isListening ? "1px solid #fca5a5" : "1px solid #e5e7eb",
                   fontSize: isMobile ? 16 : 13,
                   outline: "none",
-                  background: "#f9fafb",
+                  background: isListening ? "#fff5f5" : "#f9fafb",
                   color: "#111",
+                  transition: "border-color 0.2s, background 0.2s",
                 }}
               />
+
+              {/* Mic button — only shown when browser supports Speech API */}
+              {hasSpeechSupport && (
+                <button
+                  onClick={toggleVoice}
+                  disabled={loading}
+                  title={isListening ? "Stop listening" : "Speak your question"}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    background: isListening ? "#ef4444" : "#f3f4f6",
+                    border: "none",
+                    cursor: loading ? "default" : "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    transition: "background 0.15s",
+                    animation: isListening ? "askkamal-pulse 1s ease infinite" : "none",
+                    color: isListening ? "#fff" : "#6b7280",
+                  }}
+                >
+                  {isListening ? <StopIcon /> : <MicIcon />}
+                </button>
+              )}
+
               <button
                 onClick={() => send()}
-                disabled={!input.trim() || loading}
+                disabled={!input.trim() || loading || isListening}
                 style={{
                   width: 40,
                   height: 40,
                   borderRadius: "50%",
-                  background: input.trim() && !loading ? "#000" : "#e5e7eb",
+                  background: input.trim() && !loading && !isListening ? "#000" : "#e5e7eb",
                   border: "none",
-                  cursor: input.trim() && !loading ? "pointer" : "default",
+                  cursor: input.trim() && !loading && !isListening ? "pointer" : "default",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -328,7 +423,7 @@ export default function ChatWidget() {
                   width="16"
                   height="16"
                   fill="none"
-                  stroke={input.trim() && !loading ? "#fff" : "#9ca3af"}
+                  stroke={input.trim() && !loading && !isListening ? "#fff" : "#9ca3af"}
                   viewBox="0 0 24 24"
                 >
                   <path
@@ -342,6 +437,9 @@ export default function ChatWidget() {
             </div>
             <p style={{ fontSize: 10, color: "#9ca3af", textAlign: "center", marginTop: 6 }}>
               Powered by Xaico · Kamal's AI rep
+              {hasSpeechSupport && (
+                <span style={{ marginLeft: 6, opacity: 0.7 }}>· 🎤 voice enabled</span>
+              )}
             </p>
           </div>
         </div>
@@ -353,9 +451,7 @@ export default function ChatWidget() {
         title="Ask Kamal AI"
         style={{
           position: "fixed",
-          ...(isMobile
-            ? { top: 12, right: 14 }
-            : { bottom: 24, right: 24 }),
+          ...(isMobile ? { top: 12, right: 14 } : { bottom: 24, right: 24 }),
           width: isMobile ? 42 : 56,
           height: isMobile ? 42 : 56,
           borderRadius: "50%",
@@ -441,6 +537,11 @@ export default function ChatWidget() {
         @keyframes askkamal-fadein {
           from { opacity: 0; transform: translateX(6px); }
           to   { opacity: 1; transform: translateX(0);   }
+        }
+        @keyframes askkamal-pulse {
+          0%   { box-shadow: 0 0 0 0   rgba(239,68,68,0.5); }
+          70%  { box-shadow: 0 0 0 8px rgba(239,68,68,0);   }
+          100% { box-shadow: 0 0 0 0   rgba(239,68,68,0);   }
         }
       `}</style>
     </>
