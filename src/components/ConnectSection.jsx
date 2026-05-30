@@ -107,7 +107,7 @@ const ConnectSection = () => {
         </div>
 
         {/* Social Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-36">
           {socialCards.map((card, index) => (
             <a
               key={index}
@@ -154,7 +154,7 @@ const ConnectSection = () => {
         </div>
 
         {/* GitHub Activity */}
-        <div className="mb-20">
+        <div className="mb-36">
           <p className="text-gray-400 text-xs uppercase tracking-widest font-light mb-6">
             GitHub Activity · Last 12 Months
           </p>
