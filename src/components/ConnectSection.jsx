@@ -1,5 +1,6 @@
 import React from "react";
 import SplitText from "../components/SplitText";
+import GitHubCalendar from "react-github-calendar";
 
 const ConnectSection = () => {
   const socialCards = [
@@ -148,6 +149,25 @@ const ConnectSection = () => {
               </div>
             </a>
           ))}
+        </div>
+
+        {/* GitHub Activity */}
+        <div className="mb-20">
+          <p className="text-gray-400 text-xs uppercase tracking-widest font-light mb-6">
+            GitHub Activity · Last 12 Months
+          </p>
+          <div className="overflow-x-auto">
+            <GitHubCalendar
+              username="hereitskamal"
+              colorScheme="light"
+              blockSize={13}
+              blockMargin={4}
+              fontSize={12}
+              theme={{
+                light: ["#f0f0f0", "#d1d5db", "#6b7280", "#374151", "#111827"],
+              }}
+            />
+          </div>
         </div>
 
         {/* Direct Contact */}
