@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import SplitText from "./SplitText";
+import { useTheme } from "../contexts/ThemeContext";
 
 const DESKTOP_W = 1280;
 const DESKTOP_H = 800;
@@ -251,6 +252,7 @@ const PhonePreview = ({ src, title }) => {
 };
 
 const PersonalProjectsSection = () => {
+  const { isDarkMode } = useTheme();
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const personalProjects = [
@@ -301,8 +303,16 @@ const PersonalProjectsSection = () => {
     },
   ];
 
+  const bg = isDarkMode ? "bg-[#0a0a0a]" : "bg-white";
+  const heading = isDarkMode ? "text-white" : "text-black";
+  const sub = isDarkMode ? "text-gray-400" : "text-gray-600";
+  const cat = isDarkMode ? "text-gray-300" : "text-gray-700";
+  const tech = isDarkMode ? "text-gray-400" : "text-gray-600";
+  const link = isDarkMode ? "text-gray-200 hover:text-white" : "text-black hover:text-gray-600";
+  const border = isDarkMode ? "border-gray-800" : "border-gray-100";
+
   return (
-    <div className="min-h-screen bg-white py-24 font-sans">
+    <div className={`min-h-screen ${bg} py-24 font-sans transition-colors duration-300`}>
       <div className="w-full max-w-5xl mx-auto px-8">
         {/* Section Header */}
         <div className="mb-36">
@@ -312,10 +322,10 @@ const PersonalProjectsSection = () => {
             </p>
             <SplitText
               text="Live Projects"
-              className="text-5xl md:text-7xl font-bold text-black leading-none"
+              className={`text-5xl md:text-7xl font-bold ${heading} leading-none`}
             />
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-light">
+          <p className={`text-lg ${sub} max-w-2xl leading-relaxed font-light`}>
             Interactive applications and tools built for real-world use,
             currently serving users worldwide.
           </p>
@@ -324,31 +334,21 @@ const PersonalProjectsSection = () => {
         {/* Projects List */}
         <div className="space-y-36">
           {personalProjects.map((project, index) => (
-            <div
-              key={index}
-              className="border-b border-gray-100 pb-20 last:border-b-0"
-            >
+            <div key={index} className={`border-b ${border} pb-20 last:border-b-0`}>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Project Content */}
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-4xl font-bold text-black mb-2">
-                      {project.name}
-                    </h3>
-                    <p className="text-lg text-gray-700 font-medium">
-                      {project.category}
-                    </p>
+                    <h3 className={`text-4xl font-bold ${heading} mb-2`}>{project.name}</h3>
+                    <p className={`text-lg ${cat} font-medium`}>{project.category}</p>
                   </div>
 
-                  <p className="text-gray-600 leading-relaxed">
-                    {project.description}
-                  </p>
+                  <p className={`${sub} text-sm md:text-base leading-relaxed`}>{project.description}</p>
 
                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, idx) => (
-                      <span key={idx} className="text-sm text-gray-600 font-light">
-                        {tech}
-                        {idx < project.technologies.length - 1 && " / "}
+                    {project.technologies.map((t, idx) => (
+                      <span key={idx} className={`text-sm ${tech} font-light`}>
+                        {t}{idx < project.technologies.length - 1 && " / "}
                       </span>
                     ))}
                   </div>
@@ -358,11 +358,9 @@ const PersonalProjectsSection = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-black hover:text-gray-600 transition-colors font-medium underline"
+                      className={`${link} transition-colors font-medium underline`}
                     >
-                      {project.type === "mobile"
-                        ? "Open PWA →"
-                        : "View Live Project →"}
+                      {project.type === "mobile" ? "Open PWA →" : "View Live Project →"}
                     </a>
                   </div>
                 </div>
@@ -433,24 +431,14 @@ const PersonalProjectsSection = () => {
         </div>
 
         {/* Bottom Stats */}
-        <div className="pt-16 border-t border-gray-100 mt-16">
+        <div className={`pt-16 border-t ${border} mt-16`}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <p className="text-2xl font-bold text-black mb-1">5</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">Live Projects</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-black mb-1">Full Stack</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">2 Apps</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-black mb-1">1</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">PWA</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-black mb-1">2</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">AI-Powered</p>
-            </div>
+            {[["5", "Live Projects"], ["Full Stack", "2 Apps"], ["1", "PWA"], ["2", "AI-Powered"]].map(([v, l]) => (
+              <div key={l}>
+                <p className={`stat-num text-2xl ${heading} mb-1`}>{v}</p>
+                <p className="text-gray-500 text-sm uppercase tracking-wide">{l}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -3,8 +3,10 @@ import SplitText from "../components/SplitText";
 import { GitHubCalendar } from "react-github-calendar";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { useTheme } from "../contexts/ThemeContext";
 
 const ConnectSection = () => {
+  const { isDarkMode } = useTheme();
   const socialCards = [
     {
       name: "GitHub",
@@ -86,8 +88,14 @@ const ConnectSection = () => {
     }
   ];
 
+  const bg = isDarkMode ? "bg-[#111111]" : "bg-white";
+  const heading = isDarkMode ? "text-white" : "text-black";
+  const sub = isDarkMode ? "text-gray-400" : "text-gray-600";
+  const border = isDarkMode ? "border-gray-800" : "border-gray-100";
+  const directBorder = isDarkMode ? "border-gray-700 text-gray-200 hover:border-gray-500 hover:bg-white/5" : "border-gray-200 text-gray-900 hover:border-gray-300 hover:bg-gray-50";
+
   return (
-    <div className="min-h-screen bg-white py-24 font-sans">
+    <div className={`min-h-screen ${bg} py-24 font-sans transition-colors duration-300`}>
       <div className="w-full max-w-6xl mx-auto px-8">
         {/* Section Header */}
         <div className="mb-20">
@@ -97,11 +105,11 @@ const ConnectSection = () => {
             </p>
             <SplitText
               text="Find Me Online"
-              className="text-6xl md:text-8xl font-bold text-black leading-none"
+              className={`text-6xl md:text-8xl font-bold ${heading} leading-none`}
             />
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-light">
-            Connect with me across different platforms to see my work, 
+          <p className={`md:text-lg ${sub} max-w-2xl leading-relaxed font-light`}>
+            Connect with me across different platforms to see my work,
             thoughts, and professional journey.
           </p>
         </div>
@@ -158,17 +166,18 @@ const ConnectSection = () => {
           <p className="text-gray-400 text-xs uppercase tracking-widest font-light mb-6">
             GitHub Activity · Last 12 Months
           </p>
-          <div className="overflow-x-auto py-2" style={{ color: "#374151" }}>
+          <div className="overflow-x-auto py-2">
             <GitHubCalendar
               username="hereitskamal"
               year="last"
-              colorScheme="light"
+              colorScheme={isDarkMode ? "dark" : "light"}
               blockSize={13}
               blockMargin={4}
               fontSize={12}
-              theme={{
-                light: ["#ffffff", "#d1d5db", "#6b7280", "#374151", "#111827"],
-              }}
+              theme={isDarkMode
+                ? { dark: ["#1a1a1a", "#1a3a2a", "#1f6b3a", "#28a856", "#00e87a"] }
+                : { light: ["#ffffff", "#d1d5db", "#6b7280", "#374151", "#111827"] }
+              }
               renderBlock={(block, activity) =>
                 React.cloneElement(block, {
                   "data-tooltip-id": "gh-cal-tip",
@@ -181,30 +190,28 @@ const ConnectSection = () => {
         </div>
 
         {/* Direct Contact */}
-        <div className="border-t border-gray-100 pt-16">
+        <div className={`border-t ${border} pt-16`}>
           <div className="text-center">
-            <h3 className="text-2xl font-bold text-black mb-4">
+            <h3 className={`text-2xl font-bold ${heading} mb-4`}>
               Prefer Direct Contact?
             </h3>
-            <p className="text-gray-600 mb-8 max-w-xl mx-auto">
-              For project collaborations, job opportunities, or just to say hi, 
+            <p className={`${sub} mb-8 max-w-xl mx-auto`}>
+              For project collaborations, job opportunities, or just to say hi,
               feel free to reach out directly.
             </p>
-            
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href="mailto:itskamalofficial@gmail.com"
-                className="px-8 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center space-x-2"
+                className={`px-8 py-3 rounded-full font-medium transition-colors flex items-center space-x-2 ${isDarkMode ? "bg-white text-black hover:bg-gray-200" : "bg-black text-white hover:bg-gray-800"}`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <span>Send Email</span>
               </a>
-              
               <a
                 href="tel:+919754177313"
-                className="px-8 py-3 border border-gray-200 text-gray-900 rounded-full font-medium hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                className={`px-8 py-3 border rounded-full font-medium transition-colors flex items-center space-x-2 ${directBorder}`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -217,8 +224,8 @@ const ConnectSection = () => {
 
         {/* Bottom Note */}
         <div className="mt-16 text-center">
-          <p className="text-gray-400 text-sm">
-            Currently based in <span className="text-black font-medium">Bengaluru, India</span> 
+          <p className="text-gray-400 text-xs md:text-sm">
+            Currently based in <span className={`${heading} font-medium`}>Bengaluru, India</span>
             • Available for freelance & full-time opportunities
           </p>
         </div>

@@ -1,7 +1,9 @@
 import React from "react";
 import SplitText from "../components/SplitText";
+import { useTheme } from "../contexts/ThemeContext";
 
 const ProjectsSection = () => {
+  const { isDarkMode } = useTheme();
   const mainProjects = [
     {
       name: "Law Firm Management Platform",
@@ -69,8 +71,15 @@ const ProjectsSection = () => {
     }
   ];
 
+  const bg = isDarkMode ? "bg-[#111111]" : "bg-gray-50";
+  const heading = isDarkMode ? "text-white" : "text-black";
+  const sub = isDarkMode ? "text-gray-400" : "text-gray-600";
+  const desc = isDarkMode ? "text-gray-400" : "text-gray-600";
+  const tech = isDarkMode ? "text-gray-400" : "text-gray-600";
+  const border = isDarkMode ? "border-gray-800" : "border-gray-100";
+
   return (
-    <div className="min-h-screen bg-gray-50 py-24 font-sans">
+    <div className={`min-h-screen ${bg} py-24 font-sans transition-colors duration-300`}>
       <div className="w-full max-w-6xl mx-auto px-8">
         {/* Section Header */}
         <div className="mb-20">
@@ -80,82 +89,83 @@ const ProjectsSection = () => {
             </p>
             <SplitText
               text="Projects"
-              className="text-6xl md:text-8xl font-bold text-black leading-none"
+              className={`text-6xl md:text-8xl font-bold ${heading} leading-none`}
             />
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-light">
+          <p className={`md:text-lg ${sub} max-w-2xl leading-relaxed font-light`}>
             Production systems built across LegalTech, EdTech, IoT, e-commerce, and
             enterprise — serving thousands of users for clients in the US and India.
           </p>
         </div>
 
         {/* Professional Projects */}
-        <div className="mb-32">
-          <h3 className="text-xl uppercase text-black mb-20">Professional Projects</h3>
-          
-          <div className="space-y-16">
+        <div className="mb-20 md:mb-32">
+          <h3 className={`text-sm uppercase tracking-widest text-gray-400 mb-12 md:mb-20`}>Professional Projects</h3>
+          <div className="space-y-10 md:space-y-16">
             {mainProjects.map((project, index) => (
-              <div key={index} className="border-b border-gray-100 pb-28 last:border-b-0">
-                {/* Project Header */}
-                <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-6">
-                  <div className="mb-4 md:mb-0">
-                    <h4 className="text-4xl font-semibold text-black mb-8">
-                      {project.name}
-                    </h4>
-                    <p className="text-gray-600 leading-relaxed max-w-2xl">
-                      {project.description}
-                    </p>
-                  </div>
-                  <div className="text-right shrink-0 ml-4">
-                    <span className="text-sm text-gray-500 font-light block">{project.category}</span>
+              <div key={index} className={`border-b ${border} pb-10 md:pb-28 last:border-b-0`}>
+
+                {/* ── Mobile layout ── */}
+                <div className="md:hidden mb-4">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className="text-xs text-gray-500 font-light">{project.category}</span>
                     {project.company && (
-                      <span className="text-xs text-gray-400 font-light">{project.company}</span>
+                      <>
+                        <span className="text-gray-300 dark:text-gray-700">·</span>
+                        <span className="text-xs text-gray-400 font-light">{project.company}</span>
+                      </>
                     )}
                   </div>
-                </div>
-
-                {/* Technologies */}
-                <div className="mb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="text-sm text-gray-600 font-light"
-                      >
-                        {tech}{idx < project.technologies.length - 1 && " / "}
+                  <h4 className={`text-2xl font-semibold ${heading} leading-tight mb-3`}>{project.name}</h4>
+                  <p className={`text-sm ${desc} leading-relaxed mb-3`}>{project.description}</p>
+                  <div className="mb-2 flex flex-wrap gap-1.5">
+                    {project.technologies.map((t, idx) => (
+                      <span key={idx} className={`text-xs ${tech} font-light`}>
+                        {t}{idx < project.technologies.length - 1 && " /"}
                       </span>
                     ))}
                   </div>
+                  <p className="text-xs text-gray-500 font-light">{project.metrics}</p>
                 </div>
 
-                {/* Metrics */}
-                <p className="text-sm text-gray-500 font-light">
-                  {project.metrics}
-                </p>
+                {/* ── Desktop layout ── */}
+                <div className="hidden md:block">
+                  <div className="flex md:items-baseline justify-between mb-6">
+                    <div className="mb-4 md:mb-0">
+                      <h4 className={`text-4xl font-semibold ${heading} mb-8`}>{project.name}</h4>
+                      <p className={`${desc} leading-relaxed max-w-2xl`}>{project.description}</p>
+                    </div>
+                    <div className="text-right shrink-0 ml-4">
+                      <span className="text-sm text-gray-500 font-light block">{project.category}</span>
+                      {project.company && (
+                        <span className="text-xs text-gray-400 font-light">{project.company}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    {project.technologies.map((t, idx) => (
+                      <span key={idx} className={`text-sm ${tech} font-light`}>
+                        {t}{idx < project.technologies.length - 1 && " / "}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-sm text-gray-500 font-light">{project.metrics}</p>
+                </div>
+
               </div>
             ))}
           </div>
         </div>
 
         {/* Bottom Stats */}
-        <div className="pt-16 border-t border-gray-100">
+        <div className={`pt-16 border-t ${border}`}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <p className="text-5xl font-bold text-black mb-1">50+</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">Projects Delivered</p>
-            </div>
-            <div>
-              <p className="text-5xl font-bold text-black mb-1">20+</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">Technologies</p>
-            </div>
-            <div>
-              <p className="text-5xl font-bold text-black mb-1">5k+</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">Users Served</p>
-            </div>
-            <div>
-              <p className="text-5xl font-bold text-black mb-1">5+</p>
-              <p className="text-gray-500 text-sm uppercase tracking-wide">AI Projects</p>
-            </div>
+            {[["50+", "Projects Delivered"], ["20+", "Technologies"], ["5k+", "Users Served"], ["5+", "AI Projects"]].map(([v, l]) => (
+              <div key={l}>
+                <p className={`stat-num text-5xl ${heading} mb-1`}>{v}</p>
+                <p className="text-gray-500 text-sm uppercase tracking-wide">{l}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -5,8 +5,8 @@ const Layout = ({ children }) => {
 
   return (
     <div
-      className={`flex flex-col min-h-screen justify-center items-center ${
-        isDarkMode ? "bg-black text-white" : "bg-white text-black"
+      className={`flex flex-col min-h-screen justify-center items-center transition-colors duration-300 ${
+        isDarkMode ? "bg-[#0a0a0a]" : "bg-white"
       }`}
     >
       <main className="w-full">
